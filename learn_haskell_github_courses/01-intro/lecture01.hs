@@ -1,5 +1,20 @@
 --note: currently experimenting by running `stack ghci` and loading this file with `:l lecture_tests.hs`
 --TODO: add quickcheck tests... maybe make this a module too
+
+module Cis194.Lecture01 (
+    biggestInt,
+    smallestInt,
+    sumtorial,
+    hailstone,
+    foo,
+    isEven,
+    isEvenShorter,
+    sumPair,
+    hailstoneList,
+    hailstoneSeq,
+    intListLength,
+    ) where
+
 import Data.Char (ord)
 import Data.Sequence (Seq, (<|), (|>), empty, singleton, )
 import qualified Data.Sequence as DS
@@ -94,3 +109,9 @@ hailstoneList n = n : hailstoneList (hailstone n)
 hailstoneSeq :: Integer -> Seq Integer
 hailstoneSeq 1 = singleton 1
 hailstoneSeq n = n <| hailstoneSeq (hailstone n)
+
+
+-- Compute the length of a list of Integers.
+intListLength :: [Integer] -> Integer
+intListLength []     = 0
+intListLength (x:xs) = 1 + intListLength xs
