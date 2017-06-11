@@ -1,6 +1,7 @@
 --note: currently experimenting by running `stack ghci` and loading this file with `:l lecture_tests.hs`
 --TODO: add quickcheck tests... maybe make this a module too
 import Data.Char (ord)
+import Data.Sequence (Seq, (<|), (|>), empty, singleton, )
 import qualified Data.Sequence as DS
 import qualified Data.Foldable as DF
 
@@ -71,3 +72,25 @@ hello3 = DS.fromList "hello"
 
 helloSame = hello1 == hello2
 hello23Same = hello1 == DF.toList hello3
+
+emptyList = []
+emptySeq = empty
+
+ex18 = 1 : []
+ex19 = 3 : (1 : [])
+ex20 = 2 : 3 : 4 : []
+ex21 = [2,3,4] == 2 : 3 : 4 : []
+
+ex18_seq = 1 <| empty
+ex19_seq = 3 <| (1 <| empty)
+ex20_seq = 2 <| 3 <| 4 <| empty 
+ex21_seq = DS.fromList [2,3,4] == 2 <| 3 <| 4 <| empty 
+
+
+hailstoneList :: Integer -> [Integer]
+hailstoneList 1 = [1]
+hailstoneList n = n : hailstoneList (hailstone n)
+
+hailstoneSeq :: Integer -> Seq Integer
+hailstoneSeq 1 = singleton 1
+hailstoneSeq n = n <| hailstoneSeq (hailstone n)
