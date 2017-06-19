@@ -25,6 +25,5 @@ main :: IO ()
 main = do putStrLn "Lecture01 Tests"
           putStrLn "---HUnit---"
           H.runTestTT l01Tests
-          --putStrLn (H.showCounts hUnitResults)
           putStrLn "---QuickCheck---"
           Q.quickCheck prop_isEven
