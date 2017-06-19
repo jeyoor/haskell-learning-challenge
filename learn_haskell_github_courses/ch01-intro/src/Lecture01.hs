@@ -4,7 +4,7 @@
 --note: currently experimenting by running `stack ghci` and loading this file with `:l lecture_tests.hs`
 --TODO: add quickcheck tests... maybe make this a module too
 
-module Cis194.Lecture01 (
+module Lecture01 (
     biggestInt,
     smallestInt,
     sumtorial,
