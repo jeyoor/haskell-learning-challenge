@@ -22,9 +22,9 @@ l01Tests = H.TestList [H.TestLabel "Test foo Negative" l01TestFooNeg,
 prop_isEven num = L01.isEven num == even num
 
 main :: IO ()
-main = do putStrLn "\nLecture01 Tests"
-          putStrLn "Running HUnit Tests"
-          hUnitResults <- H.runTestTT l01Tests
-          putStrLn (H.showCounts hUnitResults)
-          putStrLn "Running QuickCheck Tests"
+main = do putStrLn "Lecture01 Tests"
+          putStrLn "---HUnit---"
+          H.runTestTT l01Tests
+          --putStrLn (H.showCounts hUnitResults)
+          putStrLn "---QuickCheck---"
           Q.quickCheck prop_isEven
