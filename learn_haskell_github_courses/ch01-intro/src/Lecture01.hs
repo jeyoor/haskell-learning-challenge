@@ -46,9 +46,9 @@ module Lecture01 (
     ex21_seq,
     ) where
 
-import Data.Char (ord)
+import           Data.Char (ord)
 import qualified Data.Sequence as S
-import Data.Sequence (Seq, (<|), empty, singleton, viewl, ViewL(EmptyL))
+import           Data.Sequence (Seq, (<|), empty, singleton, viewl, ViewL(EmptyL))
 import qualified Data.Foldable as DF
 
 pattern Empty <- (viewl -> EmptyL)
