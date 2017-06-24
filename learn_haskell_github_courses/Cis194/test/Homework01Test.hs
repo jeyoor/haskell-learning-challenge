@@ -45,6 +45,12 @@ testSumDigits1 = TestCase (assertEqual "for (sumDigits [16, 7, 12 ,5])," 22 (sum
 testSumDigits2 :: Test
 testSumDigits2 = TestCase (assertEqual "for (sumDigits [])," (0) (sumDigits []))
 
+testSumDigits3 :: Test
+testSumDigits3 = TestCase (assertEqual "for (sumDigits [16, 1, 2, 3, 1, 1, 1])," (25) (sumDigits [16, 1, 2, 3, 1, 1, 1]))
+
+testSumDigits4 :: Test
+testSumDigits4 = TestCase (assertEqual "for (sumDigits [16, 1, 2, 3, 1, 1, 1])," (26) (sumDigits [16, 1, 2, 3, 1, 1, 1, 1]))
+
 testValidate1 :: Test
 testValidate1 = TestCase (assertEqual "for (validate 4012888888881881)," True (validate 4012888888881881))
 
@@ -59,6 +65,8 @@ hTests = TestList [TestLabel "Test toDigits pos"      testToDigits1,
                    TestLabel "Test doubleEveryOther2" testDoubleEveryOther2,
                    TestLabel "Test sumDigits"         testSumDigits1,
                    TestLabel "Test sumDigits empty"   testSumDigits2,
+                   TestLabel "Test sumDigits longer1" testSumDigits3,
+                   TestLabel "Test sumDigits longer2" testSumDigits4,
                    TestLabel "Test validate1"         testValidate1,
                    TestLabel "Test validate2"         testValidate2]
 --QuickCheck Tests

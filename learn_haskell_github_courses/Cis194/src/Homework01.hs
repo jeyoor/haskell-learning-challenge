@@ -42,8 +42,7 @@ myReverseWorker newList (num:rest) = myReverseWorker (num:newList) rest
 
 -- | Double every other number in the list, starting from the right
 doubleEveryOther :: [Integer] -> [Integer]
---TODO: implement properly
-doubleEveryOther nums = myReverse (doubleEveryOtherReverseWorker nums [])
+doubleEveryOther nums = doubleEveryOtherReverseWorker (myReverse nums) []
 
 -- | Recursive, reversed helper for doubling every other number in the list, starting from the right
 doubleEveryOtherReverseWorker :: [Integer] -> [Integer] -> [Integer]
@@ -54,8 +53,18 @@ doubleEveryOtherReverseWorker (head:(next:tail)) newList = doubleEveryOtherRever
 
 -- | Sum the individual digits from a list of numbers produced by doubleEveryOther
 sumDigits :: [Integer] -> Integer
---TODO: implement properly
-sumDigits nums = 0
+sumDigits nums = foldr sumDigitsFoldWorker 0 nums
+
+-- | Sum Integers from a list, using a right fold
+sumList :: [Integer] -> Integer
+sumList nums = foldr (+) 0 nums
+
+-- | fold worker for sumDigits.
+sumDigitsFoldWorker :: Integer -> Integer -> Integer
+sumDigitsFoldWorker priorNum newNum
+  | newNum < 0   = priorNum
+  | newNum < 10  = priorNum + newNum
+  | otherwise = priorNum + (sumList (toDigits newNum))
 
 -- | Validate a credit card number, entered as an Integer
 validate :: Integer -> Bool
