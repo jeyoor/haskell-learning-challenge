@@ -4,7 +4,10 @@
 module Homework01 (
     toDigits,
     toDigitsRev,
-    myReverse
+    myReverse,
+    doubleEveryOther,
+    sumDigits,
+    validate,
     ) where
 
 -- | Convert a number [like 1234] into a list of individual digits [like [1, 2, 3, 4]
@@ -36,3 +39,18 @@ myReverse nums = myReverseWorker [] nums
 myReverseWorker :: [Integer] -> [Integer] -> [Integer]
 myReverseWorker newList [] = newList
 myReverseWorker newList (num:rest) = myReverseWorker (num:newList) rest
+
+-- | Double every other number in the list, starting from the right
+doubleEveryOther :: [Integer] -> [Integer]
+--TODO: implement properly
+doubleEveryOther nums = nums
+
+-- | Sum the individual digits from a list of numbers produced by doubleEveryOther
+sumDigits :: [Integer] -> Integer
+--TODO: implement properly
+sumDigits nums = 0
+
+-- | Validate a credit card number, entered as an Integer
+validate :: Integer -> Bool
+--TODO: implement properly
+validate num = False

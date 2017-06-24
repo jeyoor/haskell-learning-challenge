@@ -1,8 +1,23 @@
 module Homework01Test(
-   testHomework01,) where
-import Homework01     (toDigits, toDigitsRev, myReverse)
+    testHomework01,
+    ) where
+import Homework01 (
+    toDigits,
+    toDigitsRev,
+    myReverse,
+    doubleEveryOther,
+    sumDigits,
+    validate,
+    )
 import Test.QuickCheck(quickCheck)
-import Test.HUnit     (Test, Test(TestCase), Test(TestLabel), Test(TestList), assertEqual, runTestTT,)
+import Test.HUnit (
+    Test,
+    Test(TestCase),
+    Test(TestLabel),
+    Test(TestList),
+    assertEqual,
+    runTestTT,
+    )
 
 --HUnit Tests
 

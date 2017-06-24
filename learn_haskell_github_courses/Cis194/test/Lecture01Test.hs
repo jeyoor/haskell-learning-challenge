@@ -1,9 +1,16 @@
 module Lecture01Test(
-   testLecture01,) where
-
-import Lecture01      (foo, isEven)
+   testLecture01,
+   ) where
+import Lecture01(foo, isEven)
 import Test.QuickCheck(quickCheck)
-import Test.HUnit     (Test, Test(TestCase), Test(TestLabel), Test(TestList), assertEqual, runTestTT,)
+import Test.HUnit (
+    Test,
+    Test(TestCase),
+    Test(TestLabel),
+    Test(TestList),
+    assertEqual,
+    runTestTT,
+    )
 
 --HUnit Tests
 

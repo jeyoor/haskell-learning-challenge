@@ -35,7 +35,7 @@ test-suite Cis194-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
-  exposed-modules:     Lecture01Test 
+  other-modules:       Lecture01Test 
                      , Homework01Test
   build-depends:       base
                      , Cis194
