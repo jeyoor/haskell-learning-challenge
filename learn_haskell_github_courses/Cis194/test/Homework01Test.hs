@@ -1,6 +1,6 @@
 module Homework01Test(
    testHomework01,) where
-import Homework01     (toDigits, toDigitsRev)
+import Homework01     (toDigits, toDigitsRev, myReverse)
 import Test.QuickCheck(quickCheck)
 import Test.HUnit     (Test, Test(TestCase), Test(TestLabel), Test(TestList), assertEqual, runTestTT,)
 
@@ -24,9 +24,12 @@ hTests = TestList [TestLabel "Test toDigits pos"    testToDigits1,
                    TestLabel "Test toDigitsRev neg" testToDigitsRev2]
 --QuickCheck Tests
 
+prop_myReverse nums = myReverse nums == reverse nums
+
+-- | Run tests for Homework01
 testHomework01 :: IO ()
 testHomework01 = do putStrLn "Homework01 Tests"
                     putStrLn "---HUnit---"
                     runTestTT hTests
                     putStrLn "---QuickCheck---"
-                    putStrLn "Not implemented..."
+                    quickCheck prop_myReverse
