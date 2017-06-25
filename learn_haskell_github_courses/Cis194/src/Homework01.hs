@@ -7,8 +7,12 @@ module Homework01 (
     myReverse,
     doubleEveryOther,
     sumDigits,
+    sumList,
+    sumDigitsFoldWorker,
     validate,
     ) where
+
+import Debug.Trace(trace)
 
 -- | Convert a number [like 1234] into a list of individual digits [like [1, 2, 3, 4]
 toDigits :: Integer -> [Integer]
@@ -61,8 +65,10 @@ sumList nums = foldr (+) 0 nums
 
 -- | fold worker for sumDigits.
 sumDigitsFoldWorker :: Integer -> Integer -> Integer
-sumDigitsFoldWorker priorNum newNum
-  | newNum < 0   = priorNum
+sumDigitsFoldWorker newNum priorNum 
+  -- debug tracing
+  | trace ("sumDigitsFoldWorker priorNum " ++ show priorNum ++ " newNum " ++ show newNum) False = undefined
+  | newNum < 0   = priorNum + 0
   | newNum < 10  = priorNum + newNum
   | otherwise = priorNum + (sumList (toDigits newNum))
 

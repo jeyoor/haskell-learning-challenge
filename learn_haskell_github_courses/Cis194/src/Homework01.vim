@@ -35,8 +35,12 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +16 src/Homework01.hs
-badd +0 src/Lecture01.hs
+badd +67 src/Homework01.hs
+badd +49 src/Lecture01.hs
+badd +69 test/Homework01Test.hs
+badd +13 test/Lecture01Test.hs
+badd +47 Cis194.cabal
+badd +21 doc/debugging.md
 args src/Homework01.hs
 edit src/Homework01.hs
 set splitbelow splitright
@@ -153,15 +157,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 12 - ((11 * winheight(0) + 19) / 39)
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-12
+1
 normal! 0
 wincmd w
 argglobal
-edit src/Lecture01.hs
+edit test/Homework01Test.hs
 setlocal keymap=
 setlocal noarabic
 setlocal autoindent
@@ -264,12 +268,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 73 - ((27 * winheight(0) + 19) / 39)
+let s:l = 52 - ((13 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-73
-normal! 05|
+52
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 71 + 71) / 143)
 exe 'vert 2resize ' . ((&columns * 71 + 71) / 143)

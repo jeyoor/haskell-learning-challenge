@@ -7,6 +7,8 @@ import Homework01 (
     myReverse,
     doubleEveryOther,
     sumDigits,
+    sumList,
+    sumDigitsFoldWorker,
     validate,
     )
 import Test.QuickCheck(quickCheck)
@@ -46,10 +48,10 @@ testSumDigits2 :: Test
 testSumDigits2 = TestCase (assertEqual "for (sumDigits [])," (0) (sumDigits []))
 
 testSumDigits3 :: Test
-testSumDigits3 = TestCase (assertEqual "for (sumDigits [16, 1, 2, 3, 1, 1, 1])," (25) (sumDigits [16, 1, 2, 3, 1, 1, 1]))
+testSumDigits3 = TestCase (assertEqual "for (sumDigits [16, 1, 2, 3, 1, 1, 1])," (16) (sumDigits [16, 1, 2, 3, 1, 1, 1]))
 
 testSumDigits4 :: Test
-testSumDigits4 = TestCase (assertEqual "for (sumDigits [16, 1, 2, 3, 1, 1, 1])," (26) (sumDigits [16, 1, 2, 3, 1, 1, 1, 1]))
+testSumDigits4 = TestCase (assertEqual "for (sumDigits [16, 1, 2, 3, 1, 1, 1])," (17) (sumDigits [16, 1, 2, 3, 1, 1, 1, 1]))
 
 testValidate1 :: Test
 testValidate1 = TestCase (assertEqual "for (validate 4012888888881881)," True (validate 4012888888881881))
@@ -72,6 +74,7 @@ hTests = TestList [TestLabel "Test toDigits pos"      testToDigits1,
 --QuickCheck Tests
 
 prop_myReverse nums = myReverse nums == reverse nums
+prop_sumList nums = sumList nums == sum nums
 
 -- | Run tests for Homework01
 testHomework01 :: IO ()
@@ -80,3 +83,4 @@ testHomework01 = do putStrLn "Homework01 Tests"
                     runTestTT hTests
                     putStrLn "---QuickCheck---"
                     quickCheck prop_myReverse
+                    quickCheck prop_sumList
