@@ -18,6 +18,8 @@ library
   exposed-modules:     Lib
                      , Lecture01
                      , Homework01
+                     , Log
+                     , Homework02
   build-depends:       base >= 4.7 && < 5
                      , text
                      , containers
@@ -37,6 +39,7 @@ test-suite Cis194-test
   main-is:             Spec.hs
   other-modules:       Lecture01Test 
                      , Homework01Test
+                     , Homework02Test
   build-depends:       base
                      , Cis194
                      , QuickCheck

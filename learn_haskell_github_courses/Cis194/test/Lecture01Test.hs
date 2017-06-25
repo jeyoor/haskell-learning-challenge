@@ -35,3 +35,4 @@ testLecture01 = do putStrLn "Lecture01 Tests"
                    runTestTT l01Tests
                    putStrLn "---QuickCheck---"
                    quickCheck prop_isEven
+                   putStr "\n"

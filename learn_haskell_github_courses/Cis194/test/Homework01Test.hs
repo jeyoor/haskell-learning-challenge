@@ -98,3 +98,4 @@ testHomework01 = do putStrLn "Homework01 Tests"
                     putStrLn "---QuickCheck---"
                     quickCheck prop_myReverse
                     quickCheck prop_sumList
+                    putStr "\n"
