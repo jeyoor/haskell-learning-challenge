@@ -10,6 +10,7 @@ import Homework01 (
     sumList,
     sumDigitsFoldWorker,
     validate,
+    checkSum,
     )
 import Test.QuickCheck(quickCheck)
 import Test.HUnit (
@@ -59,6 +60,9 @@ testValidate1 = TestCase (assertEqual "for (validate 4012888888881881)," True (v
 testValidate2 :: Test
 testValidate2 = TestCase (assertEqual "for (validate 4012888888881882)," False (validate 4012888888881882))
 
+testCheckSum1 :: Test
+testCheckSum1 = TestCase (assertEqual "for (checkSum 1386)," (18) (checkSum 1386))
+
 hTests = TestList [TestLabel "Test toDigits pos"      testToDigits1,
                    TestLabel "Test toDigits neg"      testToDigits2,
                    TestLabel "Test toDigitsRev pos"   testToDigitsRev1,
@@ -69,6 +73,7 @@ hTests = TestList [TestLabel "Test toDigits pos"      testToDigits1,
                    TestLabel "Test sumDigits empty"   testSumDigits2,
                    TestLabel "Test sumDigits longer1" testSumDigits3,
                    TestLabel "Test sumDigits longer2" testSumDigits4,
+                   TestLabel "Test checkSum"          testCheckSum1,
                    TestLabel "Test validate1"         testValidate1,
                    TestLabel "Test validate2"         testValidate2]
 --QuickCheck Tests

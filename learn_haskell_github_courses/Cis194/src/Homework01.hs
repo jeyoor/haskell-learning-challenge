@@ -10,6 +10,7 @@ module Homework01 (
     sumList,
     sumDigitsFoldWorker,
     validate,
+    checkSum,
     ) where
 
 import Debug.Trace(trace)
@@ -67,12 +68,15 @@ sumList nums = foldr (+) 0 nums
 sumDigitsFoldWorker :: Integer -> Integer -> Integer
 sumDigitsFoldWorker newNum priorNum 
   -- debug tracing
-  | trace ("sumDigitsFoldWorker priorNum " ++ show priorNum ++ " newNum " ++ show newNum) False = undefined
+  -- | trace ("sumDigitsFoldWorker priorNum " ++ show priorNum ++ " newNum " ++ show newNum) False = undefined
   | newNum < 0   = priorNum + 0
   | newNum < 10  = priorNum + newNum
   | otherwise = priorNum + (sumList (toDigits newNum))
 
 -- | Validate a credit card number, entered as an Integer
 validate :: Integer -> Bool
---TODO: implement properly
-validate num = False
+validate num = (checkSum num) `mod` 10 == 0
+
+-- | Helper to calculate the checksum value
+checkSum :: Integer -> Integer
+checkSum num = (sumDigits (doubleEveryOther (toDigits num)))
