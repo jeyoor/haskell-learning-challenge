@@ -14,8 +14,6 @@ module Homework01 (
     hanoi,
     ) where
 
-import Debug.Trace(trace)
-
 -- | Convert a number [like 1234] into a list of individual digits [like [1, 2, 3, 4]
 toDigits :: Integer -> [Integer]
 toDigits num = toDigitsWorker 1 num [] 
@@ -23,10 +21,7 @@ toDigits num = toDigitsWorker 1 num []
 -- | Recursive helper for toDigits.
 toDigitsWorker :: Integer -> Integer -> [Integer] -> [Integer]
 toDigitsWorker place num list 
-  -- debug tracing
-  -- | trace ("toDigitsWorker list " ++ show list ++ " num " ++ show num ++ " place " ++ show place) False = undefined
-  | num <  0   = []
-  | num == 0   = list
+  | num <=  0  = list
   | otherwise  = toDigitsWorker placeVal (num - remainder) (digit:list)
   where
     placeVal  = place*10
@@ -39,12 +34,12 @@ toDigitsRev num = myReverse (toDigits num)
 
 -- | Reverse a list by recursing through it
 myReverse :: [Integer] -> [Integer]
-myReverse nums = myReverseWorker [] nums
+myReverse nums = myReverseWorker nums [] 
 
 -- | Recursive helper for myReverse
 myReverseWorker :: [Integer] -> [Integer] -> [Integer]
-myReverseWorker newList [] = newList
-myReverseWorker newList (num:rest) = myReverseWorker (num:newList) rest 
+myReverseWorker [] newList = newList
+myReverseWorker (num:rest) newList  = myReverseWorker rest (num:newList)
 
 -- | Double every other number in the list, starting from the right
 doubleEveryOther :: [Integer] -> [Integer]
@@ -53,8 +48,8 @@ doubleEveryOther nums = doubleEveryOtherReverseWorker (myReverse nums) []
 -- | Recursive, reversed helper for doubling every other number in the list, starting from the right
 doubleEveryOtherReverseWorker :: [Integer] -> [Integer] -> [Integer]
 doubleEveryOtherReverseWorker [] newList  = newList
-doubleEveryOtherReverseWorker (head:[]) newList  = head:newList
-doubleEveryOtherReverseWorker (head:(next:tail)) newList = doubleEveryOtherReverseWorker tail ((next * 2):head:newList) 
+doubleEveryOtherReverseWorker (x:[]) newList  = x:newList
+doubleEveryOtherReverseWorker (x:(y:zs)) newList = doubleEveryOtherReverseWorker zs ((y * 2):x:newList)
 
 
 -- | Sum the individual digits from a list of numbers produced by doubleEveryOther
@@ -68,8 +63,6 @@ sumList nums = foldr (+) 0 nums
 -- | fold worker for sumDigits.
 sumDigitsFoldWorker :: Integer -> Integer -> Integer
 sumDigitsFoldWorker newNum priorNum 
-  -- debug tracing
-  -- | trace ("sumDigitsFoldWorker priorNum " ++ show priorNum ++ " newNum " ++ show newNum) False = undefined
   | newNum < 0   = priorNum + 0
   | newNum < 10  = priorNum + newNum
   | otherwise = priorNum + (sumList (toDigits newNum))
@@ -86,6 +79,11 @@ checkSum num = (sumDigits (doubleEveryOther (toDigits num)))
 type Peg = String
 -- | A move is pair of two pegs (from, to)
 type Move = (Peg, Peg)
--- | This function takes the number of discs and returns the list of moves
+-- | This function takes the number of discs and the three peg names and returns the list of moves to solve the puzzle
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi _ _ _ _ = [ ("blah", "blah"), ("blah", "blah"), ("blah", "blah") ]
+hanoi 1 start dest _ = (start, dest):[]
+hanoi discs start dest storage = (hanoi (discs - 1) start storage dest) ++ (start, dest):[] ++ (hanoi (discs - 1) storage dest start)
+
+--hanoiWorker :: Integer -> Peg -> Peg -> Peg -> [Move] -> [Move]
+--hanoiWorker 1 start dest storage pastMoves = ((start, dest) : pastMoves)
+--hanoiWorker discs start dest storage pastMoves = (hanoi (discs - 1) start storage dest):()

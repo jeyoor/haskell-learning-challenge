@@ -67,6 +67,9 @@ testCheckSum1 = TestCase (assertEqual "for (checkSum 1386)," (18) (checkSum 1386
 testHanoi1 :: Test
 testHanoi1 = TestCase (assertEqual "for (hanoi 2 \"a\" \"b\" \"c\")" ([("a","c"), ("a","b"), ("c","b")]) (hanoi 2 "a" "b" "c"))
 
+testHanoi2 :: Test
+testHanoi2 = TestCase (assertEqual "for (hanoi 3 \"left\" \"right\" \"middle\")" ([("left","right"),("left","middle"),("right","middle"),("left","right"),("middle","left"),("middle","right"),("left","right")]) (hanoi 3 "left" "right" "middle"))
+
 hTests = TestList [TestLabel "Test toDigits pos"      testToDigits1,
                    TestLabel "Test toDigits neg"      testToDigits2,
                    TestLabel "Test toDigitsRev pos"   testToDigitsRev1,
@@ -78,7 +81,8 @@ hTests = TestList [TestLabel "Test toDigits pos"      testToDigits1,
                    TestLabel "Test sumDigits longer1" testSumDigits3,
                    TestLabel "Test sumDigits longer2" testSumDigits4,
                    TestLabel "Test checkSum"          testCheckSum1,
-                   TestLabel "Test hanoi"             testHanoi1,
+                   TestLabel "Test hanoi1"            testHanoi1,
+                   TestLabel "Test hanoi2"            testHanoi2,
                    TestLabel "Test validate1"         testValidate1,
                    TestLabel "Test validate2"         testValidate2]
 --QuickCheck Tests
