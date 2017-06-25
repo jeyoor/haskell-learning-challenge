@@ -1,23 +1,30 @@
 I am working through the [UPenn CIS194](https://www.seas.upenn.edu/~cis194/spring13/) lectures and homework assignments in an effort to learn more about Haskell.
 
-The first part of Homework 1 is focused on validating credit card numbers.
+The first part of the [first homework](https://www.seas.upenn.edu/~cis194/spring13/hw/01-intro.pdf) is focused on validating credit card numbers.
 
+To validate each credit card number (passed in as an Integer), the Integer should be converted to a list of digits.
 
+Beginning with the penultimate item in the list and moving toward the first item in the list, every other number is doubled.
 
+The digits of all the numbers are summed.
 
+If the resulting sum is divisible by 10, the credit card number is valid.
 
+Three helper methods are recommended by the assignment on the way to the validate method.
 
+   * Convert an Integer to a list of individual digits - toDigits
+   * Double every other item in the list, starting with the penultimate item, moving toward the front. - doubleEveryOther
+   * Sum all the resulting digits - sumDigits
 
-##TODO: post this as a comment after posting question.
-There is already a question regarding the content of the [first assignment](https://codereview.stackexchange.com/questions/104876/upenn-cis-194-homework-1-validating-credit-card-numbers) (validating credit card numbers).
+I implemented some additional helpers.
 
+   * reverse a list - myReverse [essentially an Integer-specific clone of reverse]
+   * sum a list of integers - sumList [essentially a Integer-specific clone of sum]
+   * fold helper that sums numbers less than 10 or calls sumDigits on numbers greater than 10 - sumDigitsFoldWorker
 
+The functions in my solution are roughly equivalent to those in [this prior question](https://codereview.stackexchange.com/questions/104876/upenn-cis-194-homework-1-validating-credit-card-numbers). I'm still digesting that post, but I think the main impact would be eliminating sumDigitsFoldWorker.
 
-I am working through the [UPenn CIS194](https://www.seas.upenn.edu/~cis194/spring13/) lectures and homework assignments in an effort to learn more about Haskell.
-
-The functions in my solution are roughly equivalent to those in [this prior question](https://codereview.stackexchange.com/questions/104876/upenn-cis-194-homework-1-validating-credit-card-numbers).
-
-I'd like feedback on the [HUnit]() and [QuickCheck]() tests I wrote while working the assignment.
+I'd like feedback on the HUnit and QuickCheck tests I wrote while working the assignment.
 
     module Homework01Test(
         testHomework01,
@@ -119,3 +126,11 @@ I'd like feedback on the [HUnit]() and [QuickCheck]() tests I wrote while workin
                         putStrLn "---QuickCheck---"
                         quickCheck prop_myReverse
                         quickCheck prop_sumList
+
+I am open to any feedback, but I have some specific questions.
+
+   * Is there a more idiomatic, concise way to declare multiple tests for a single function?
+   * How can I QuickCheck more of the code?
+   * Is there a way to test methods without exporting them from a module? I have exported several internal helpers from Homework01 that I would rather keep private just for testing.
+      * I am using stack Version 1.3.2
+      * I can add the contents of my .cabal and stack.yaml if necessary
