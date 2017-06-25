@@ -11,6 +11,7 @@ module Homework01 (
     sumDigitsFoldWorker,
     validate,
     checkSum,
+    hanoi,
     ) where
 
 import Debug.Trace(trace)
@@ -80,3 +81,11 @@ validate num = (checkSum num) `mod` 10 == 0
 -- | Helper to calculate the checksum value
 checkSum :: Integer -> Integer
 checkSum num = (sumDigits (doubleEveryOther (toDigits num)))
+
+-- | It's an alias for the peg name
+type Peg = String
+-- | A move is pair of two pegs (from, to)
+type Move = (Peg, Peg)
+-- | This function takes the number of discs and returns the list of moves
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi _ _ _ _ = [ ("blah", "blah"), ("blah", "blah"), ("blah", "blah") ]
