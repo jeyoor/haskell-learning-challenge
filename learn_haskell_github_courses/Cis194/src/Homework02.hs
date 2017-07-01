@@ -3,53 +3,55 @@ module Homework02 where
 
 import Log
 
+import Debug.Trace(trace)
+
 -- | Parse a line of the log into the structured format
 parseMessage :: String -> LogMessage
-parseMessage message = LogMessage messageType 1312 "Lorem Ipsum"
+parseMessage message
+-- Debug tracing
+--  | trace ("message: " ++ (show message) ++ "code: " ++ (show code)) False = undefined
+  | otherwise = LogMessage messageType 1312 "Lorem Ipsum"
   where chunks             = words message
-        code               = (unwords . take 1) chunks
-        errorString        = (unwords . take 1 . drop 1) chunks
+        code               = grabFirst  chunks
         errorLevel  :: Int
         errorLevel         = case code of
-                                "E" -> (read . unwords . take 1 . drop 1) chunks
+                                "E" -> (read . grabSecond) chunks
                                 (_) -> 0
+        timestamp   :: Int
+        timestamp          = case code of
+                                "E" -> (read . grabThird) chunks
+                                (_) -> (read . grabSecond) chunks
+--        message     :: String
+--        message            = case code of
+--                                "E" -> fourthFollowing chunks
+--                                (_) -> thirdFollowing chunks
         messageType :: MessageType
-        messageType = case code of
-                         "E" -> Error errorLevel
-                         "I" -> Info
-                         "W" -> Warning
+        messageType        = case code of
+                                "E" -> Error errorLevel
+                                "I" -> Info
+                                "W" -> Warning
 --TODO: how to make this exhaustive? How to do error handling?
+--  1. catch parse exceptions
+--  2. handle empty code, etc
 
 --Possible experiments/exploration of Maybe approach below
 
--- | Maybe retrieve first item from a list 
-grabFirst :: [a] -> Maybe a
-grabFirst (x:_) = Just x
-grabFirst (_)   = Nothing
+-- | Get first string from a list
+grabFirst :: [String] -> String
+grabFirst = unwords . take 1
 
--- | Maybe retrieve second item from a list 
-grabSecond :: [a] -> Maybe a
-grabSecond (x:_:_) = Just x
-grabSecond (_)     = Nothing
+-- | Get second string from a list
+grabSecond :: [String] -> String
+grabSecond = grabFirst . drop 1
 
--- | Maybe retrieve third item from a list 
-grabThird :: [a] -> Maybe a
-grabThird (x:_:_:_) = Just x
-grabThird (_)       = Nothing
+-- | Get third string from a list
+grabThird :: [String] -> String
+grabThird = grabFirst . drop 2
 
--- | Maybe convert a String to an Int
-convertInt :: Maybe String -> Maybe Int
---TODO: use safe read here
-convertInt (Just a) = Just (read a)
-convertInt (_)      = Nothing
+-- | Concatenate the third and following strings from a list
+thirdFollowing :: [String] -> String
+thirdFollowing = unwords . drop 2
 
--- | Create data?
-handleCode :: Maybe String -> Maybe String -> Maybe String -> LogMessage
-handleCode Nothing _ _           = Unknown ""
-handleCode (Just code) Nothing _ = Unknown code
-handleCode (Just code) _ Nothing = Unknown code
-handleCode (Just code) (Just time) errorLevel = case code of
-                                                 -- "E" -> LogMessage
-                                                 -- "I" -> LogMessage 
-                                                 -- "W" -> LogMessage
-                                                  (_) -> Unknown code
+-- | Concatenate the fourth and following strings from a list
+fourthFollowing :: [String] -> String
+fourthFollowing = unwords . drop 3
