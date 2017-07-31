@@ -1,8 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 module Homework02 (
-    parseMessage,
     grabNthWord,
     grabNthAndFollowingWords,
+    parseMessage,
+    parse,
     ) where
 
 import Log
@@ -53,3 +54,6 @@ parseValidMessage code chunks
                                 "E" -> Error errorLevel
                                 "I" -> Info
                                 "W" -> Warning
+-- | Parse an entire log file into a list of log messages
+parse :: String -> [LogMessage]
+parse file = map parseMessage $ lines file
