@@ -11,13 +11,24 @@ import Debug.Trace(trace)
 
 -- | Parse a line of the log into the structured format
 parseMessage :: String -> LogMessage
-parseMessage message
+parseMessage message = case code of
+                          "E" -> parseValidMessage code chunks 
+                          "W" -> parseValidMessage code chunks 
+                          "I" -> parseValidMessage code chunks 
+                          (_) -> parseInvalidMessage message
+  where chunks             = words message
+        code               = grabFirst chunks
+-- | Parse an improperly formatted message into the unknown format
+parseInvalidMessage :: String -> LogMessage
+parseInvalidMessage message = Unknown message
+-- | Parse a properly formatted line of the log into the structured format
+parseValidMessage :: String -> [String] -> LogMessage
+parseValidMessage code chunks
 -- Debug tracing
 --  | trace ("message: " ++ (show message) ++ "code: " ++ (show code)) False = undefined
   | otherwise = LogMessage messageType timestamp errorMessage
-  where chunks             = words message
-        code               = grabFirst  chunks
-        errorLevel  :: Int
+  where errorLevel  :: Int
+        --TODO: switch to Text.Read.readMaybe and handle issues here
         errorLevel         = case code of
                                 "E" -> (read . grabSecond) chunks
                                 (_) -> 0
@@ -34,9 +45,6 @@ parseMessage message
                                 "E" -> Error errorLevel
                                 "I" -> Info
                                 "W" -> Warning
---TODO: how to make this exhaustive? How to do error handling?
---  1. catch parse exceptions
---  2. handle empty code, etc
 
 --Possible experiments/exploration of Maybe approach below
 

@@ -85,3 +85,12 @@ HMMMM
 Just reuse the *Type constructor* name.
 This creates a recursive structure.
 I *believe* this requires that the *type constructor* and *data constructor* must have separate names.
+
+#Homework2
+
+##parseMessage
+ok so how do we get this code to handle errors properly?
+I would like the code to handle errors in parsing integers 
+
+I think the solution is to switch to readMaybe from Text.Read
+But we can put this as a TODO
