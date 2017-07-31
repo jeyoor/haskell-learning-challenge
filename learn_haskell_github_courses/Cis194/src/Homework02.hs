@@ -1,13 +1,21 @@
 {-# OPTIONS_GHC -Wall #-}
 module Homework02 (
     parseMessage,
-    grabSecond,
-    grabThird,
+    grabNthWord,
+    grabNthAndFollowingWords,
     ) where
 
 import Log
 
 import Debug.Trace(trace)
+
+-- | Get nth word from a list of strings
+grabNthWord :: Int -> [String] -> String
+grabNthWord num = unwords . take 1 . drop (num - 1)
+
+-- | Concatenate the nth and following strings from a list
+grabNthAndFollowingWords :: Int -> [String] -> String
+grabNthAndFollowingWords num = unwords . drop (num - 1)
 
 -- | Parse a line of the log into the structured format
 parseMessage :: String -> LogMessage
@@ -17,7 +25,7 @@ parseMessage message = case code of
                           "I" -> parseValidMessage code chunks 
                           (_) -> parseInvalidMessage message
   where chunks             = words message
-        code               = grabFirst chunks
+        code               = grabNthWord 1 chunks
 -- | Parse an improperly formatted message into the unknown format
 parseInvalidMessage :: String -> LogMessage
 parseInvalidMessage message = Unknown message
@@ -30,40 +38,18 @@ parseValidMessage code chunks
   where errorLevel  :: Int
         --TODO: switch to Text.Read.readMaybe and handle issues here
         errorLevel         = case code of
-                                "E" -> (read . grabSecond) chunks
+                                "E" -> (read . grabNthWord 2) chunks
                                 (_) -> 0
         timestamp   :: Int
         timestamp          = case code of
-                                "E" -> (read . grabThird) chunks
-                                (_) -> (read . grabSecond) chunks
+                                "E" -> (read . grabNthWord 3) chunks
+                                (_) -> (read . grabNthWord 2) chunks
         errorMessage     :: String
         errorMessage            = case code of
-                                     "E" -> fourthFollowing chunks
-                                     (_) -> thirdFollowing chunks
+                                     "E" -> grabNthAndFollowingWords 4 chunks
+                                     (_) -> grabNthAndFollowingWords 3 chunks
         messageType :: MessageType
         messageType        = case code of
                                 "E" -> Error errorLevel
                                 "I" -> Info
                                 "W" -> Warning
-
---Possible experiments/exploration of Maybe approach below
-
--- | Get first string from a list
-grabFirst :: [String] -> String
-grabFirst = unwords . take 1
-
--- | Get second string from a list
-grabSecond :: [String] -> String
-grabSecond = grabFirst . drop 1
-
--- | Get third string from a list
-grabThird :: [String] -> String
-grabThird = grabFirst . drop 2
-
--- | Concatenate the third and following strings from a list
-thirdFollowing :: [String] -> String
-thirdFollowing = unwords . drop 2
-
--- | Concatenate the fourth and following strings from a list
-fourthFollowing :: [String] -> String
-fourthFollowing = unwords . drop 3
