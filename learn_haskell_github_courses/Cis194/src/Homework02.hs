@@ -1,5 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
-module Homework02 where
+module Homework02 (
+    parseMessage,
+    grabSecond,
+    grabThird,
+    ) where
 
 import Log
 
@@ -10,7 +14,7 @@ parseMessage :: String -> LogMessage
 parseMessage message
 -- Debug tracing
 --  | trace ("message: " ++ (show message) ++ "code: " ++ (show code)) False = undefined
-  | otherwise = LogMessage messageType 1312 "Lorem Ipsum"
+  | otherwise = LogMessage messageType timestamp errorMessage
   where chunks             = words message
         code               = grabFirst  chunks
         errorLevel  :: Int
@@ -21,10 +25,10 @@ parseMessage message
         timestamp          = case code of
                                 "E" -> (read . grabThird) chunks
                                 (_) -> (read . grabSecond) chunks
---        message     :: String
---        message            = case code of
---                                "E" -> fourthFollowing chunks
---                                (_) -> thirdFollowing chunks
+        errorMessage     :: String
+        errorMessage            = case code of
+                                     "E" -> fourthFollowing chunks
+                                     (_) -> thirdFollowing chunks
         messageType :: MessageType
         messageType        = case code of
                                 "E" -> Error errorLevel

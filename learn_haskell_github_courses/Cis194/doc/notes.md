@@ -83,3 +83,5 @@ HMMMM
 
 ##Recursive data types
 Just reuse the *Type constructor* name.
+This creates a recursive structure.
+I *believe* this requires that the *type constructor* and *data constructor* must have separate names.
