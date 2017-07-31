@@ -5,6 +5,7 @@ import Log
 import Homework02 (
     parseMessage,
     parse,
+    insert,
     )
 import Test.QuickCheck(quickCheck)
 import Test.Hspec (
@@ -20,6 +21,8 @@ import Test.Hspec (
 spec :: String -> String -> Spec
 spec officialPart officialWhole = describe "HSpec Tests" $ do
 
+  --TODO: test grabNthWord and grabNthWordAndFollowing
+
   describe "parseMessage" $ do
     let input `shouldReturn` expected = parseMessage input `shouldBe` expected
     it "works on error log messages" $ "E 2 562 help help" `shouldReturn` LogMessage (Error 2) 562 "help help"
@@ -30,7 +33,9 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
     let input `shouldReturn` expected = parse input `shouldBe` expected
     it "works on a hardcoded sample file" $
       "E 2 562 help help\nI 26 la la la\nThis is invalid" `shouldReturn`
-        [LogMessage (Error 2) 562 "help help",LogMessage Info 26 "la la la",Unknown "This is invalid"]
+        [LogMessage (Error 2) 562 "help help",
+         LogMessage Info 26 "la la la",
+         Unknown "This is invalid"]
     it "works on part of the official file" $ officialPart `shouldReturn`
         [LogMessage Info 5053 "pci_id: con ing!",
          LogMessage Info 4681 "ehci 0xf43d000:15: regista14: [0xbffff 0xfed nosabled 00-02] Zonseres: brips byted nored)",
@@ -43,7 +48,19 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
          LogMessage Info 790 "those long words, and, what's more, I don't believe you do either!' And",
          LogMessage Info 3899 "hastily."]
 
---QuickCheck Tests
+  describe "insert" $ do
+    it "works with unknown log messages" $ insert (Unknown "invalid message") Leaf `shouldBe` Leaf
+    it "works with earlier log messages" $
+      insert (LogMessage Info 7 "la la")
+             (Node
+               Leaf
+               (LogMessage (Error 10) 3 "This error is chill")
+               Leaf)
+             `shouldBe`
+             (Node
+               (Node Leaf (LogMessage Info 7 "la la") Leaf)
+               (LogMessage (Error 10) 3 "This error is chill")
+               Leaf)
 
 -- | Run tests for Homework02
 testHomework02 :: IO ()

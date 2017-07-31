@@ -4,6 +4,7 @@ module Homework02 (
     grabNthAndFollowingWords,
     parseMessage,
     parse,
+    insert,
     ) where
 
 import Log
@@ -54,6 +55,13 @@ parseValidMessage code chunks
                                 "E" -> Error errorLevel
                                 "I" -> Info
                                 "W" -> Warning
+
 -- | Parse an entire log file into a list of log messages
 parse :: String -> [LogMessage]
 parse file = map parseMessage $ lines file
+
+-- | Insert a log message into a given tree
+insert :: LogMessage -> MessageTree -> MessageTree
+--insert (LogMessage messageType timestamp errorMessage) originalTree = 
+insert (Unknown _) originalTree = originalTree
+insert _ originalTree = originalTree
