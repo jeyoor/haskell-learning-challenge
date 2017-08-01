@@ -6,12 +6,12 @@ import Homework02 (
     parseMessage,
     parse,
     insert,
+    build,
     )
 import Test.QuickCheck(quickCheck)
 import Test.Hspec (
     Spec,
     describe,
-    shouldReturn,
     shouldBe,
     it,
     hspec,
@@ -85,6 +85,18 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
                (LogMessage (Error 10) 15 "This error is chill")
                Leaf)
 
+  describe "build" $ do
+    it "builds a tree from a short list" $
+      build [LogMessage (Error 10) 15 "This error is chill",
+             LogMessage Warning 3 "Early Warning",
+             LogMessage (Error 28) 13 "This error is dangerous!"]
+      `shouldBe`
+      (Node
+        (Node Leaf (LogMessage Warning 3 "Early Warning") 
+          (Node Leaf (LogMessage (Error 28) 13 "This error is dangerous!") Leaf))
+        (LogMessage (Error 10) 15 "This error is chill")
+        Leaf)
+
 -- | Run tests for Homework02
 testHomework02 :: IO ()
 testHomework02 = do putStrLn "Homework02 Tests"
@@ -92,4 +104,3 @@ testHomework02 = do putStrLn "Homework02 Tests"
                     officialWhole <- readFile "res/Homework02/error.log"
                     let officialPart = unlines . take 10 $ lines officialWhole
                     hspec $ spec officialPart officialWhole
-                    putStr "\n"
