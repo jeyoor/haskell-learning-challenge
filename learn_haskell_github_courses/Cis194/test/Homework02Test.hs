@@ -7,6 +7,7 @@ import Homework02 (
     parse,
     insert,
     build,
+    inOrder,
     )
 import Test.QuickCheck(quickCheck)
 import Test.Hspec (
@@ -96,6 +97,18 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
           (Node Leaf (LogMessage (Error 28) 13 "This error is dangerous!") Leaf))
         (LogMessage (Error 10) 15 "This error is chill")
         Leaf)
+
+  describe "inOrder" $ do
+    it "sorts the tree properly" $
+      inOrder (Node
+                (Node Leaf (LogMessage Warning 3 "Early Warning") 
+                  (Node Leaf (LogMessage (Error 28) 13 "This error is dangerous!") Leaf))
+                (LogMessage (Error 10) 15 "This error is chill")
+                Leaf)
+      `shouldBe`
+      [LogMessage Warning 3 "Early Warning",
+       LogMessage (Error 28) 13 "This error is dangerous!",
+       LogMessage (Error 10) 15 "This error is chill"]
 
 -- | Run tests for Homework02
 testHomework02 :: IO ()
