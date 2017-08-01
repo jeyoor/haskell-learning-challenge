@@ -8,6 +8,7 @@ module Homework02 (
     build,
     inOrder,
     whatWentWrong,
+    whoDunIt,
     ) where
 
 import Log
@@ -53,6 +54,7 @@ parseValidMessage code chunks = LogMessage messageType timestamp errorMessage
                                 "E" -> Error errorLevel
                                 "I" -> Info
                                 "W" -> Warning
+                                (_) -> Info
 
 -- | Parse an entire log file into a list of log messages
 parse :: String -> [LogMessage]
@@ -95,3 +97,17 @@ whatWentWrongWorker ((LogMessage (Error level) _ message):logs) messages = if le
 whatWentWrongWorker ((LogMessage _ _ _):logs) messages = whatWentWrongWorker logs messages
 whatWentWrongWorker ((Unknown _):logs) messages = whatWentWrongWorker logs messages
 whatWentWrongWorker [] messages = reverse messages
+
+-- | Filter the sorted errors by other means to find the culprit
+whoDunIt :: [LogMessage] -> [String]
+whoDunIt unsortedLogs = whoDunItWorker (inOrder $ build unsortedLogs) []
+
+-- | Recursive worker to build a properly filtered list
+whoDunItWorker :: [LogMessage] -> [String] -> [String]
+whoDunItWorker ((LogMessage (Error level) _ message):logs) messages = if level >= -999 then
+                                                                             whoDunItWorker logs (message:messages)
+                                                                           else
+                                                                             whoDunItWorker logs messages
+whoDunItWorker ((LogMessage _ _ _):logs) messages = whoDunItWorker logs messages
+whoDunItWorker ((Unknown _):logs) messages = whoDunItWorker logs messages
+whoDunItWorker [] messages = reverse messages
