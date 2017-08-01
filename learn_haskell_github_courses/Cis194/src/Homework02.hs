@@ -62,6 +62,14 @@ parse file = map parseMessage $ lines file
 
 -- | Insert a log message into a given tree
 insert :: LogMessage -> MessageTree -> MessageTree
---insert (LogMessage messageType timestamp errorMessage) originalTree = 
+insert newMessage@(LogMessage messageType timestamp errorMessage) tree@(Node left (existingMsg@(LogMessage _ existingTime _)) right) = if timestamp <= existingTime then (Node (insert newMessage left) existingMsg right) else (Node left existingMsg (insert newMessage right))
+--insert newMsg@(LogMessage messageType timestamp errorMessage) tree@(Node left (existingMsg@(LogMessage _ existingTime _)) right) = if timestamp <= existingTime then (Node (insert newMessage left) existingMsg right) else (Node left existingMsg (insert newMessage right))
+--  | timestamp <= existingTime = (Node (insert newMessage left) existingMsg right)
+--  | timestamp >  existingTime = (Node left existingMsg (insert newMessage right))
+insert (LogMessage messageType timestamp errorMessage) (Leaf) = (Node Leaf (LogMessage messageType timestamp errorMessage) Leaf)
 insert (Unknown _) originalTree = originalTree
 insert _ originalTree = originalTree
+
+-- | Use the timestamps to pick a subtree to recurse over
+--insertPick :: LogMessage -> Int -> Int -> MessageTree -> MessageTree -> MessageTree
+--insertPick newMsg timestamp existingTime left right

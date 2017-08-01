@@ -50,7 +50,7 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
 
   describe "insert" $ do
     it "works with unknown log messages" $ insert (Unknown "invalid message") Leaf `shouldBe` Leaf
-    it "works with earlier log messages" $
+    it "works with inserting later log messages" $
       insert (LogMessage Info 7 "la la")
              (Node
                Leaf
@@ -58,8 +58,31 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
                Leaf)
              `shouldBe`
              (Node
-               (Node Leaf (LogMessage Info 7 "la la") Leaf)
+               Leaf
                (LogMessage (Error 10) 3 "This error is chill")
+               (Node Leaf (LogMessage Info 7 "la la") Leaf))
+    it "works with insert earlier log messages" $
+      insert (LogMessage Warning 2 "Early Warning")
+             (Node
+               Leaf
+               (LogMessage (Error 10) 3 "This error is chill")
+               Leaf)
+             `shouldBe`
+             (Node
+               (Node Leaf (LogMessage Warning 2 "Early Warning") Leaf)
+               (LogMessage (Error 10) 3 "This error is chill")
+               Leaf)
+    it "works with a deeper tree" $
+      insert (LogMessage (Error 28) 13 "This error is dangerous!")
+             (Node
+               (Node Leaf (LogMessage Warning 3 "Early Warning") Leaf)
+               (LogMessage (Error 10) 15 "This error is chill")
+               Leaf)
+             `shouldBe`
+             (Node
+               (Node Leaf (LogMessage Warning 3 "Early Warning") 
+                 (Node Leaf (LogMessage (Error 28) 13 "This error is dangerous!") Leaf))
+               (LogMessage (Error 10) 15 "This error is chill")
                Leaf)
 
 -- | Run tests for Homework02
