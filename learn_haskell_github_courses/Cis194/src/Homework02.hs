@@ -7,6 +7,7 @@ module Homework02 (
     insert,
     build,
     inOrder,
+    whatWentWrong,
     ) where
 
 import Log
@@ -80,3 +81,16 @@ inOrder tree = inOrderWorker tree []
 inOrderWorker :: MessageTree -> [LogMessage] -> [LogMessage]
 inOrderWorker Leaf list = list
 inOrderWorker (Node left message right) list = inOrderWorker left (message:(inOrderWorker right list))
+
+-- | Filter the sorted errors with severity > 50 from the list
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong unsortedLogs = whatWentWrongWorker (inOrder $ build unsortedLogs) []
+
+-- | Recursive worker to build a properly filtered list
+whatWentWrongWorker :: [LogMessage] -> [String] -> [String]
+whatWentWrongWorker ((LogMessage (Error level) _ message):logs) messages = if level >= 50 then
+                                                                             whatWentWrongWorker logs (message:messages)
+                                                                           else
+                                                                             whatWentWrongWorker logs messages
+whatWentWrongWorker ((LogMessage _ _ _):logs) messages = whatWentWrongWorker logs messages
+whatWentWrongWorker [] messages = messages

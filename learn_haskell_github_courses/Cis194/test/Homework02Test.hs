@@ -8,6 +8,7 @@ import Homework02 (
     insert,
     build,
     inOrder,
+    whatWentWrong,
     )
 import Test.QuickCheck(quickCheck)
 import Test.Hspec (
@@ -19,8 +20,8 @@ import Test.Hspec (
     )
 
 --HSpec Tests
-spec :: String -> String -> Spec
-spec officialPart officialWhole = describe "HSpec Tests" $ do
+spec :: String -> String -> String -> Spec
+spec sampleWhole officialPart officialWhole = describe "HSpec Tests" $ do
 
   --TODO: test grabNthWord and grabNthWordAndFollowing
 
@@ -110,10 +111,19 @@ spec officialPart officialWhole = describe "HSpec Tests" $ do
        LogMessage (Error 28) 13 "This error is dangerous!",
        LogMessage (Error 10) 15 "This error is chill"]
 
+  describe "whatWentWrong" $ do
+    it "filters the list properly" $
+      whatWentWrong (parse sampleWhole)
+      `shouldBe`
+      ["Way too many pickles",
+       "Bad pickle-flange interaction detected",
+       "Flange failed!"]
+
 -- | Run tests for Homework02
 testHomework02 :: IO ()
 testHomework02 = do putStrLn "Homework02 Tests"
                     --grab the appropriate pieces of the official file
                     officialWhole <- readFile "res/Homework02/error.log"
+                    sampleWhole   <- readFile "res/Homework02/sample.log"
                     let officialPart = unlines . take 10 $ lines officialWhole
-                    hspec $ spec officialPart officialWhole
+                    hspec $ spec sampleWhole officialPart officialWhole
