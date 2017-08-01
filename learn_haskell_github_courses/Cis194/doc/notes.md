@@ -94,3 +94,18 @@ I would like the code to handle errors in parsing integers
 
 I think the solution is to switch to readMaybe from Text.Read
 But we can put this as a TODO
+
+##whoDunIt
+
+wow ok this is hard.
+
+There seem to be at least 3 types of messages.
+
+1. Chunks from Alice in Wonderland
+2. Linuxy error messages
+3. the actual mustardwatch failures described in whatWentWrong
+
+I wonder if it'd be possible to filter out the Alice stuff...
+but maybe that's the secret!
+
+Hard to tell... hmm....
