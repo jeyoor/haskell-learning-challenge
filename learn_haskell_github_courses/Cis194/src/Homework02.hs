@@ -61,7 +61,7 @@ parse file = map parseMessage $ lines file
 -- | Insert a log message into a given tree
 insert :: LogMessage -> MessageTree -> MessageTree
 insert (LogMessage messageType timestamp errorMessage) Leaf = Node Leaf (LogMessage messageType timestamp errorMessage) Leaf
-insert newMessage@(LogMessage messageType timestamp errorMessage) tree@(Node left existingMsg@(LogMessage _ existingTime _) right) = if timestamp <= existingTime then Node (insert newMessage left) existingMsg right else Node left existingMsg $ insert newMessage right
+insert newMessage@(LogMessage _ timestamp _) (Node left existingMsg@(LogMessage _ existingTime _) right) = if timestamp <= existingTime then Node (insert newMessage left) existingMsg right else Node left existingMsg $ insert newMessage right
 insert _ originalTree = originalTree
 
 -- | Build an entire tree from a list of log messages
@@ -93,4 +93,5 @@ whatWentWrongWorker ((LogMessage (Error level) _ message):logs) messages = if le
                                                                            else
                                                                              whatWentWrongWorker logs messages
 whatWentWrongWorker ((LogMessage _ _ _):logs) messages = whatWentWrongWorker logs messages
-whatWentWrongWorker [] messages = messages
+whatWentWrongWorker ((Unknown _):logs) messages = whatWentWrongWorker logs messages
+whatWentWrongWorker [] messages = reverse messages

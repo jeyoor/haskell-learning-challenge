@@ -1,6 +1,5 @@
 {-# OPTIONS_GHC -Wall #-}
 module Homework02Test(testHomework02) where
-import Control.Applicative
 import Log
 import Homework02 (
     parseMessage,
@@ -10,7 +9,6 @@ import Homework02 (
     inOrder,
     whatWentWrong,
     )
-import Test.QuickCheck(quickCheck)
 import Test.Hspec (
     Spec,
     describe,
