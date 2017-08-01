@@ -20,6 +20,7 @@ library
                      , Homework01
                      , Log
                      , Homework02
+                     , Lecture03
   build-depends:       base >= 4.7 && < 5
                      , text
                      , containers
