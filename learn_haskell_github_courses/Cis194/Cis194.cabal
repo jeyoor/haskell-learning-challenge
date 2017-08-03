@@ -21,6 +21,7 @@ library
                      , Log
                      , Homework02
                      , Lecture03
+                     , Homework03
   build-depends:       base >= 4.7 && < 5
                      , text
                      , containers
@@ -41,6 +42,7 @@ test-suite Cis194-test
   other-modules:       Lecture01Test 
                      , Homework01Test
                      , Homework02Test
+                     , Homework03Test
   build-depends:       base
                      , Cis194
                      , QuickCheck

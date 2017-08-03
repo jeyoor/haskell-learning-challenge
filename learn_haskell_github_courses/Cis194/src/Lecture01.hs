@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE ViewPatterns, PatternSynonyms, RankNTypes #-}
 
 --note: currently experimenting by running `stack ghci` and loading this file with `:l lecture_tests.hs`
