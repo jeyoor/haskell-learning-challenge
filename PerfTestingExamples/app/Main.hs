@@ -3,4 +3,4 @@ module Main where
 import Lib
 
 main :: IO ()
-main = someFunc
+main = putStrLn $ show $ myReverseAppend [1..5]
