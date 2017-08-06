@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 module Homework03 (
     skips,
+    localMaxima,
     ) where
 
 import Data.List(length)
@@ -8,12 +9,13 @@ import Data.List(length)
 -- | Recursively builds a list of sublists, picking every nth item
 skips :: [a] -> [[a]]
 skips [] = [[]]
-skips l = skipsWorker 1 (replicate (length l) l) []
+skips l = skipsWorker 1 (replicate (length l) l)
 
 -- | Recursively builds a list of sublists, picking every nth item
-skipsWorker :: Int -> [[a]] -> [[a]] -> [[a]]
-skipsWorker _ [] output = reverse output
-skipsWorker num (x:xs) output = skipsWorker (num + 1) xs ((skip num x):output)
+skipsWorker :: Int -> [[a]] -> [[a]]
+skipsWorker num [] = []
+skipsWorker num (x:xs) = (skip num x):(skipsWorker (num + 1) xs)
+--skipsWorker num (x:xs) output = skipsWorker (num + 1) xs ((skip num x):output)
 
 --TODO: replace above function with mapAccumL
 --Examples working: 
@@ -31,7 +33,11 @@ skip base fullList  = skipWorker base 1 fullList []
 
 -- | recursive worker for the skip function
 skipWorker :: Int -> Int -> [a] -> [a] -> [a]
-skipWorker base _ [] newlist = reverse newlist
+skipWorker _ _ [] newlist = reverse newlist
 skipWorker base idx (x:xs) newlist = if idx `mod` base == 0
                                      then skipWorker base (idx + 1) xs (x:newlist)
                                      else skipWorker base (idx + 1) xs newlist
+
+
+localMaxima :: [Integer] -> [Integer]
+localMaxima l = l
