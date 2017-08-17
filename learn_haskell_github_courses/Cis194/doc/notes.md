@@ -202,3 +202,57 @@ TODO: Use this http://www.serpentine.com/criterion/tutorial.html and this https:
 In theory we could compare all sorts of things.
 
 In practice, let's compare several implementations of reverse!
+
+Added bench/Profile.hs file.
+However the FILE NAME can be different from the MODULE NAME.
+
+The MODULE NAME given in the file specified as "main-is" MUST BE "module Main(main)" exactly!
+
+Benchmarking works! (Not sure how to get profiling of the benchmark going?)
+
+
+benchmarking myReverseAppend/[1..100]
+time                 3.986 μs   (3.982 μs .. 3.990 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 3.992 μs   (3.988 μs .. 4.003 μs)
+std dev              22.03 ns   (12.97 ns .. 37.97 ns)
+             
+benchmarking myReverseAppend/[1..1000]
+time                 53.88 μs   (53.82 μs .. 53.95 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 53.90 μs   (53.84 μs .. 53.96 μs)
+std dev              195.0 ns   (159.7 ns .. 247.6 ns)
+             
+benchmarking myReverseAccum/[1..100]
+time                 1.877 μs   (1.870 μs .. 1.887 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.868 μs   (1.866 μs .. 1.873 μs)
+std dev              11.43 ns   (7.056 ns .. 22.16 ns)
+             
+benchmarking myReverseAccum/[1..1000]
+time                 19.93 μs   (19.90 μs .. 19.98 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 19.96 μs   (19.90 μs .. 20.10 μs)
+std dev              270.3 ns   (90.00 ns .. 521.7 ns)
+
+
+Overall it would appear that the accum with a strict accum param is faster...
+
+Please note that this also had -O2 enabled so who knows what would happen w/o dat.
+
+Let's try it with 10k and 100k instead!
+
+##More info on profiling
+
+Need to rebuild in profiling mode?
+http://lambdor.net/?p=258
+
+You can add --profile and other stack options to build in profiling mode.
+
+However, you need to `stack clean` and `stack (build|test|bench) --profile`.
+To rebuild for this purpose and redownload libs with profiling.
+
+All libs will have to be redownloaded and rebuilt. This takes a long time.
+
+Maybe we should use --no-library-profiling to prevent this
+
