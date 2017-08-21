@@ -5,6 +5,7 @@ module Homework03 (
     ) where
 
 import Data.List(length)
+--import Debug.Trace(trace)
 
 -- | Recursively builds a list of sublists, picking every nth item
 skips :: [a] -> [[a]]
@@ -38,6 +39,14 @@ skipWorker base idx (x:xs) newlist = if idx `mod` base == 0
                                      then skipWorker base (idx + 1) xs (x:newlist)
                                      else skipWorker base (idx + 1) xs newlist
 
-
 localMaxima :: [Integer] -> [Integer]
-localMaxima l = l
+--localMaxima [] | trace "localMaxima [] " False = undefined
+localMaxima [] = []
+--localMaxima (x:[]) | trace ("localMaxima x:[] " ++ show x) False = undefined
+localMaxima (_:[]) = []
+--localMaxima (x:y:[]) | trace ("localMaxima x:y:[] " ++ show x ++ " " ++ show y) False = undefined
+localMaxima (_:_:[]) = []
+--localMaxima (w:x:y:zs) | trace ("localMaxima w:x:y:zs" ++ show w ++ " " ++ show x ++ " " ++ show y ++ " " ++ show zs) False = undefined
+localMaxima (w:x:y:zs) = if x >= y && x >= w
+                         then x:(localMaxima (x:y:zs))
+                         else    localMaxima (x:y:zs)
