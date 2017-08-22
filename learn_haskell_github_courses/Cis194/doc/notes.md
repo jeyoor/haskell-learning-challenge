@@ -256,3 +256,23 @@ All libs will have to be redownloaded and rebuilt. This takes a long time.
 
 Maybe we should use --no-library-profiling to prevent this
 
+
+#Lecture 4?
+--point free magic
+curryMagic :: (b -> c) -> (a -> b) -> (a -> c)
+curryMagic second first = first . second
+
+--returns a lambda
+curryWithoutDot :: (b -> c) -> (a -> b) -> (a -> c)
+curryMagic f g = \x -> f (g x)
+
+
+There is an art to deciding the order of arguments to a function to make partial applications of it as useful as possible: 
+the arguments should be ordered from from “least to greatest variation”, that is,
+ arguments which will often be the same should be listed first, and arguments which will often be different should come last.
+
+
+
+#Lecture 6
+
+thunks are evaluated only enough to allow a pattern match to proceed, and no further! 
