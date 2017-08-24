@@ -1,11 +1,11 @@
-#Homework1
+# Homework1
 
-##toDigitsWorker
+## toDigitsWorker
 Forgot case for num < 0 and caused infinite recursion
 Whole system got slow when running `stack test`
 Was able to use an initial trace guard to notice and fix
 
-##doubleEveryOther
+## doubleEveryOther
 Seems to be working for odd count lists
 Why failing on even count?
 
@@ -14,7 +14,7 @@ Are we starting at the wrong end?
 
 Yep. Using ghci on some examples I could see I needed to (myReverse nums) before calling the worker.
 
-##sumDigits
+## sumDigits
 
 Ok, tests pass, but something is wrong.
 

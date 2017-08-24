@@ -1,13 +1,13 @@
-#Homework1
+# Homework1
 
-##Hanoi
+##  Hanoi
 
 Hanoi is recursive!
 It's an example of an algorithm naturally amenable to recursion.
 
 The example is using "a" as the source and "b" as the sink ("c" is temp storage!)
 
-##Tests
+## Tests
 
 Got good feedback here
 https://codereview.stackexchange.com/questions/166623/upenn-cis194-credit-card-validation-homework-1-part-1-tests
@@ -29,9 +29,9 @@ $ evidently changes the precedence of function application (reduces the number o
 => is used in type signatures to specify class constraints.
 [=> operator](http://learnyouahaskell.com/types-and-typeclasses#believe-the-type)
 
-#Lecture2
+# Lecture2
 
-##Beyond Enumerations
+## Beyond Enumerations
 
 Guess: the type of OK is a constructor of FailableDouble
 
@@ -62,15 +62,15 @@ data Person = Person String Int Thing
 Key words there being *one-constructor type*.
 If it's a *one-constructor* type the type constructor and data constructor often have the same name.
 
-##Algebraic data types in general
+## Algebraic data types in general
 Type and data constructors *always* start with a Capital letter.
 
-##Dream aside
+## Dream aside
 Use IHaskell kernel to build math explorations in Jupyter
 Explore different pieces of mathematics
 It'd be amazing to mashup LaTeX and Haskell together for this purpose.
 
-##Pattern-matching
+## Pattern-matching
 
 An underscore _ can be used as a “wildcard pattern” which matches anything.
 
@@ -81,21 +81,21 @@ Hmmm... I wonder if this could be used to greatly simplify the parse functions?
 Just pattern matching stuff IF IT'S THERE????
 HMMMM
 
-##Recursive data types
+## Recursive data types
 Just reuse the *Type constructor* name.
 This creates a recursive structure.
 I *believe* this requires that the *type constructor* and *data constructor* must have separate names.
 
-#Homework2
+# Homework2
 
-##parseMessage
+## parseMessage
 ok so how do we get this code to handle errors properly?
 I would like the code to handle errors in parsing integers 
 
 I think the solution is to switch to readMaybe from Text.Read
 But we can put this as a TODO
 
-##whoDunIt
+## whoDunIt
 
 wow ok this is hard.
 
@@ -112,7 +112,7 @@ Hard to tell... hmm....
 
 #Homework3
 
-##Tail Recursion vs. Guarded Recursion
+## Tail Recursion vs. Guarded Recursion
 
 Tail Recursion in haskell requires a strict accumulating parameter to avoid profilgating thunks.
 
@@ -165,7 +165,7 @@ According to this, adding optimizations can use "strictness analysis" to check h
 
 
 
-##Aside on debugging and profiling
+## Aside on debugging and profiling
 
 Debugging (inspecting the state of the program) is crucial to using a programming environment effectively.
 Here are some ways to accomplish this in Haskell
@@ -195,7 +195,7 @@ When using `stack exec`, you need to place command-line options for your program
 
 See [this link](https://github.com/commercialhaskell/stack/issues/1655) for more information.
 
-##Benchmarking/profiling
+## Benchmarking/profiling
 
 TODO: Use this http://www.serpentine.com/criterion/tutorial.html and this https://gist.github.com/snoyberg/9b1c77b595c4adf90880213fc49f2a21
 
@@ -242,7 +242,7 @@ Please note that this also had -O2 enabled so who knows what would happen w/o da
 
 Let's try it with 10k and 100k instead!
 
-##More info on profiling
+## More info on profiling
 
 Need to rebuild in profiling mode?
 http://lambdor.net/?p=258
@@ -257,7 +257,7 @@ All libs will have to be redownloaded and rebuilt. This takes a long time.
 Maybe we should use --no-library-profiling to prevent this
 
 
-#Lecture 4?
+# Lecture 4?
 --point free magic
 curryMagic :: (b -> c) -> (a -> b) -> (a -> c)
 curryMagic second first = first . second
@@ -273,6 +273,6 @@ the arguments should be ordered from from “least to greatest variation”, tha
 
 
 
-#Lecture 6
+# Lecture 6
 
 thunks are evaluated only enough to allow a pattern match to proceed, and no further! 
