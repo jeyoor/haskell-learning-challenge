@@ -2,9 +2,10 @@
 module Homework03 (
     skips,
     localMaxima,
+    histogram,
     ) where
 
-import Data.List(length)
+import Data.List(length, sort)
 --import Debug.Trace(trace)
 
 -- | Recursively builds a list of sublists, picking every nth item
@@ -39,6 +40,7 @@ skipWorker base idx (x:xs) newlist = if idx `mod` base == 0
                                      then skipWorker base (idx + 1) xs (x:newlist)
                                      else skipWorker base (idx + 1) xs newlist
 
+-- | filter the list down to its local maxima (one number greater than two neighbors)
 localMaxima :: [Integer] -> [Integer]
 --localMaxima [] | trace "localMaxima [] " False = undefined
 localMaxima [] = []
@@ -47,6 +49,20 @@ localMaxima (_:[]) = []
 --localMaxima (x:y:[]) | trace ("localMaxima x:y:[] " ++ show x ++ " " ++ show y) False = undefined
 localMaxima (_:_:[]) = []
 --localMaxima (w:x:y:zs) | trace ("localMaxima w:x:y:zs" ++ show w ++ " " ++ show x ++ " " ++ show y ++ " " ++ show zs) False = undefined
+-- TODO: implement this with zip3 instead?
 localMaxima (w:x:y:zs) = if x >= y && x >= w
                          then x:(localMaxima (x:y:zs))
                          else    localMaxima (x:y:zs)
+
+-- | print a stacked histogram for the number of times each digit 0-9 appears
+histogram :: [Integer] -> String
+histogram nums = (show $ histogramWorker nums) ++ "\n==========\n0123456789\n"
+
+histogramIndexes :: [Integer]
+histogramIndexes = [0..9]
+
+-- | worker for building the list in ghci first
+histogramWorker :: [Integer] -> [Integer]
+histogramWorker nums = map (\x -> toInteger $ length $ takeWhile (\y -> y == x) (filter (== x) nums)) histogramIndexes
+
+--here's a one-liner map (\x -> length $ takeWhile (\y -> y == x) (filter (== x) [5,1,1,1])) [0..9]
